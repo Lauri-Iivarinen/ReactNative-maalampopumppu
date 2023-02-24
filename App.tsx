@@ -6,6 +6,7 @@ import {theme} from './types/types'
 //import {styles} from './styles/styles'
 import Settings from './components/Settings';
 import { useColorScheme, StyleSheet } from 'react-native';
+import PumpStatus from './components/PumpStatus';
 
 
 export default function App() {
@@ -32,7 +33,10 @@ export default function App() {
             initialParams={{}/*{theme: theme}*/} />
           <Tab.Screen 
             name='Configurations'
-            component={Settings}
+            component={Settings} />
+          <Tab.Screen
+            name="Pump Data"
+            component={PumpStatus}
           />
         </Tab.Navigator>
       </NavigationContainer>
