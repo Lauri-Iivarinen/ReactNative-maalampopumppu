@@ -4,7 +4,7 @@ import Homepage from './components/Homepage';
 import React, {useState, useEffect} from 'react'
 import {theme} from './types/types'
 //import {styles} from './styles/styles'
-import Settings from './components/Settings';
+import PumpConfig from './components/PumpConfig';
 import { useColorScheme, StyleSheet } from 'react-native';
 import PumpStatus from './components/PumpStatus';
 
@@ -33,7 +33,7 @@ export default function App() {
             initialParams={{}/*{theme: theme}*/} />
           <Tab.Screen 
             name='Configurations'
-            component={Settings} />
+            component={PumpConfig} />
           <Tab.Screen
             name="Pump Data"
             component={PumpStatus}
