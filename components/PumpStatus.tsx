@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, Text, View } from "react-native";
+import { View } from "react-native";
 import { PumpCodes } from "../types/types";
 import PumpDataListItem from "./PumpDataListItem";
-import {fetchOfflineData, fetchData} from '../util/fetch'
+import { fetchOfflineData, fetchData } from '../util/fetch'
+import { getKeywords } from "../util/util";
 
 
 
 export default function PumpStatus() {
 
     const [data, setData] = useState<PumpCodes[]>([])
+    const KEYWORDS = getKeywords('get')
+
+    const doFetch = async () => {
+        let fetchedData = fetchData()
+        setData(await fetchedData)
+    }
 
     useEffect(() => {
-        //setData(fetchData())
-        setData(fetchOfflineData())
+        doFetch()
+        //setData(fetchOfflineData())
     }, [])
 
-    const KEYWORDS = ['Temp Sensor', 'Percent usage', 'Temp variable', 'Status', 'Number', 'Time Hours']
-
-
     return (
-        <View style={{ flex: 1, flexDirection: 'row', flexWrap:'wrap', flexBasis:250}}>
+        <View style={{ flex: 1, flexDirection: 'column', flexWrap:'wrap', flexBasis:250}}>
             {KEYWORDS.map((keyword,index) => {
                 return (
                     <PumpDataListItem key={index} props={{ data: data, keyword: keyword }} />
@@ -32,11 +36,11 @@ export default function PumpStatus() {
 /*
 
 <PumpDataListItem props={{ data: data, keyword: 'Temp Sensor' }} />
-            <PumpDataListItem props={{ data: data, keyword: 'Percent usage' }} />
-            <PumpDataListItem props={{ data: data, keyword: 'Temp variable' }} />
-            <PumpDataListItem props={{ data: data, keyword: 'Status' }} />
-            <PumpDataListItem props={{ data: data, keyword: 'Number' }} />
-            <PumpDataListItem props={{ data: data, keyword: 'Time Hours' }} />
+<PumpDataListItem props={{ data: data, keyword: 'Percent usage' }} />
+<PumpDataListItem props={{ data: data, keyword: 'Temp variable' }} />
+<PumpDataListItem props={{ data: data, keyword: 'Status' }} />
+<PumpDataListItem props={{ data: data, keyword: 'Number' }} />
+<PumpDataListItem props={{ data: data, keyword: 'Time Hours' }} />
 
  0001,Radiator Return
  0002,Radiator Forward
