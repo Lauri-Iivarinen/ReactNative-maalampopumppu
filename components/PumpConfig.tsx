@@ -7,13 +7,10 @@ import { PumpCodes } from '../types/types';
 import PumpDataListItem from './PumpDataListItem';
 
 export default function PumpConfig({ route, navigation }: any) {
-
-    const [data, setData] = useState<PumpCodes[]>([])
-    const KEYWORDS = getKeywords('set')
-    //console.log(keywords)
-    
     //idx-> ID, val -> VALUE
     const POSTENDPOINT = 'http://' + HOST + 'api/set?idx=2204&val=220'
+    const [data, setData] = useState<PumpCodes[]>([])
+    const KEYWORDS = getKeywords('set')
 
     const doFetch = async () => {
         let fetchedData = fetchData()

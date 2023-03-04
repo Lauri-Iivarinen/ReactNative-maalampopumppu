@@ -5,8 +5,6 @@ import PumpDataListItem from "./PumpDataListItem";
 import { fetchOfflineData, fetchData } from '../util/fetch'
 import { getKeywords } from "../util/util";
 
-
-
 export default function PumpStatus() {
 
     const [data, setData] = useState<PumpCodes[]>([])

@@ -2,11 +2,6 @@ import React from "react";
 import { View, Text, FlatList } from "react-native";
 import { PumpCodes } from "../types/types";
 
-interface DataListItem{
-    data: PumpCodes[];
-    keyword: string;
-}
-
 export default function PumpDataListItem({ props }: any) {
     
     const getValue = (value: number, keyword: string) => {
