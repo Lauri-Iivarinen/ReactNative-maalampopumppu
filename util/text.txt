@@ -1,0 +1,38 @@
+0001,Radiator Return,Temp Sensor
+0002,Radiator Forward,Temp Sensor
+0003,Heat carrier Return,Temp Sensor
+0004,Heat carrier Forwrd,Temp Sensor
+0005,Brine in/Evaporator,Temp Sensor
+0006,Brine out/Condenser,Temp Sensor
+0007,Outdoor,Temp Sensor
+0008,Indoor,Temp Sensor
+0009,Warm water 1 / Top,Temp Sensor
+000A,Warm water 2 / Mid,Temp Sensor
+000B,Hot gas / Compr.,Temp Sensor
+3104,Add heat status  0W,Percent usage
+0107,Heating setpoint,Temp variable
+0111,Warm water setpoint,Temp variable
+0203,Room temp setpoint,Set temp
+2204,Room sensor influence,Set temp
+2205,Heat set 1, CurveL,Set number
+0207,Heat set 3, Parallel,Set number
+0208,Warm Water stop temp,Set temp
+020B,Warm water Difference,Set temp
+7209,Extra Warm Water,Set Minutes
+1215,Elect. heater switch,Set Status
+1233,External control,Set Status
+020A,Summer mode,Set temp
+2210,Holiday mode,Set Hour
+1A01,Compressor  0W,Status
+1A02,Add heat step 1  0W,Status
+1A03,Add heat step 2  0W,Status
+1A04,Pump Cold circuit  0W,Status
+1A05,Pump Heat circuit  0W,Status
+1A06,Pump Radiator  0W,Status
+1A07,Switch valve 1  0W,Status
+1A20,Alarm  0W,Status
+BA91,Alarm Code,Number
+6C55,Compr. cons. heating,Time Hours
+6C56,Compr. cons. hotwat,Time Hours
+6C58,Aux cons. heating,Time Hours
+6C59,Aux cons. hot water,Time Hours
