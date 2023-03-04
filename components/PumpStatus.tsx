@@ -1,90 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { FlatList, Text, View } from "react-native";
-import { HOST } from '@env'
-import { CODES, OFFLINEDATA } from '../util/util'
 import { PumpCodes } from "../types/types";
+import PumpDataListItem from "./PumpDataListItem";
+import {fetchOfflineData, fetchData} from '../util/fetch'
+
+
 
 export default function PumpStatus() {
 
     const [data, setData] = useState<PumpCodes[]>([])
 
-    //Fetch data from pump, REQUIRES same WLAN
-    const fetchData = () => {
-        fetch('http://' + HOST + '/api/alldata')
-            .then(response => response.json())
-            .then(result => {
-                //setData(result)
-                //console.log(result)
-                //const keys = Object.keys(result)
-                const list: PumpCodes[] = []
-                const values = Object.entries(result)
-                //console.log(values)
-                values.forEach(value => {
-                    const code = CODES.find(i => {
-                        return i.code === value[0]
-                    })
-                    const codeData: PumpCodes = {
-                        name: code!.name,
-                        code: code!.code,
-                        value: value[1],
-                        valueType: code?.valueType
-                    }
-                    list.push(codeData)
-                })
-                setData(list)
-            })
-            .catch(error => console.log(error))
-    }
-
-    //Fetch hard coded testdata for developing away from pump
-    const fetchOfflineData = () => {
-        const list: PumpCodes[] = []
-                const values = Object.entries(OFFLINEDATA)
-                //console.log(values)
-                values.forEach(value => {
-                    const code = CODES.find(i => {
-                        return i.code === value[0]
-                    })
-                    const codeData: PumpCodes = {
-                        name: code!.name,
-                        code: code!.code,
-                        value: value[1],
-                        valueType: code?.valueType
-                    }
-                    list.push(codeData)
-                })
-                setData(list)
-    }
-
     useEffect(() => {
-        //fetchData()
-        fetchOfflineData()
+        //setData(fetchData())
+        setData(fetchOfflineData())
     }, [])
 
-    //Separate list components
-    const separator = () => {
-        return <View style={{ backgroundColor: 'black', height: 1, marginRight: 10 }}></View>
-    }
-    
+    const KEYWORDS = ['Temp Sensor', 'Percent usage', 'Temp variable', 'Status', 'Number', 'Time Hours']
+
+
     return (
-        <View style={{ flex: 1 }}>
-            <View style={{flex: 1}}>
-                <FlatList
-                    data={data}
-                    renderItem={({ item }) =>
-                        <View style={{ flex: 1}}>
-                            <Text style={{marginRight: 20}}>{item.name}</Text>
-                            <Text style={{marginRight: 20}}>{item.value} {item.valueType}</Text>
-                        </View>
-                    }
-                    ItemSeparatorComponent={separator}    
-                />
-            </View>
+        <View style={{ flex: 1, flexDirection: 'row', flexWrap:'wrap', flexBasis:250}}>
+            {KEYWORDS.map((keyword,index) => {
+                return (
+                    <PumpDataListItem key={index} props={{ data: data, keyword: keyword }} />
+                )
+            })}
         </View>
     )
 }
 
 /*
+
+<PumpDataListItem props={{ data: data, keyword: 'Temp Sensor' }} />
+            <PumpDataListItem props={{ data: data, keyword: 'Percent usage' }} />
+            <PumpDataListItem props={{ data: data, keyword: 'Temp variable' }} />
+            <PumpDataListItem props={{ data: data, keyword: 'Status' }} />
+            <PumpDataListItem props={{ data: data, keyword: 'Number' }} />
+            <PumpDataListItem props={{ data: data, keyword: 'Time Hours' }} />
 
  0001,Radiator Return
  0002,Radiator Forward
