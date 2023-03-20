@@ -4,7 +4,7 @@ import { CODES, OFFLINEDATA } from "./util"
 
 //Added both fetches here for easy use in multiple components
 
-//Transform fetch result into type PumpCodes[]
+/** Transform fetch result into type PumpCodes[] */
 const transformToPumpCodes = (item: any[]) => {
     const list: PumpCodes[] = []
     const values = Object.entries(item)
@@ -24,7 +24,7 @@ const transformToPumpCodes = (item: any[]) => {
     return list
 }
 
-//Fetch data from pump, REQUIRES same WLAN
+/**Fetch data from pump, REQUIRES same WLAN*/
 export const fetchData = async () => {
     try {
         const response = await fetch('http://' + HOST + '/api/alldata')
@@ -37,7 +37,7 @@ export const fetchData = async () => {
     }
 }
 
-//Fetch hard coded testdata for developing away from pump
+/**Fetch hard coded testdata for developing away from pump wlan*/
 export const fetchOfflineData = () => {
     const list: PumpCodes[] = []
     const values = Object.entries(OFFLINEDATA)

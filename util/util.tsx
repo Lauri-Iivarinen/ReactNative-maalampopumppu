@@ -1,3 +1,4 @@
+/** Pump variable id, name and type */
 export const CODES = [
     {name: "Radiator Return", code: "0001", valueType: "Temp Sensor"},
     {name: "Radiator Forward", code: "0002", valueType: "Temp Sensor"},
@@ -39,14 +40,13 @@ export const CODES = [
     {name: "Aux cons. hot water", code: "6C59", valueType: "Time Hours"}
 ]
 
-
+/** Values to use while no access to pump api (wifi) */
 export const OFFLINEDATA = {
     "0001": 224, "0002": -483, "0003": 224, "0004": 224, "0005": 63, "0006": 76, "0007": -26, "0008": -483, "0009": -483, "000A": 482, "000B": 315, "3104": 0, "0107": 225, "0111": 480, "0203": 200, "2204": 50, "2205": 19, "0207": 6, "0208": 480, "020B": 40, "7209": 0, "1215": 1, "1233": 0, "020A": 250, "2210": 0, "1A01": 0, "1A02": 0, "1A03": 0, "1A04": 0, "1A05": 1, "1A06": 1, "1A07": 0, "1A20": 0, "BA91": 210, "6C55": 0, "6C56": 107260, "6C58": 11930, "6C59": 2020
 }
 
-
-//Return keywords for different types of variables such as Temp variable, Time Hours, Set number etc
 //Found in CODES valueType
+/**Return all pump varible names that match the variable type (set/get) such as Temp variable, Time Hours, Set number etc */
 export const getKeywords = (keyword: 'set'|'get') => {
     const dupes: string[] = []
     const keywords = CODES.filter(code => {

@@ -1,8 +1,17 @@
 import {StyleSheet} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { useColorScheme } from 'react-native';
+const getColor = () => {
+    let vari: string | null = ''
+    try {
+        AsyncStorage.getItem('theme').then(color => vari = color)
+        return vari
+    } catch (error) {
+        return 'light'
+    }
+}
 
-const scheme = useColorScheme()
+const scheme = getColor()
 
 export const styles = StyleSheet.create({
     main: {

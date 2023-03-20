@@ -7,6 +7,7 @@ import {theme} from './types/types'
 import PumpConfig from './components/PumpConfig';
 import { useColorScheme, StyleSheet } from 'react-native';
 import PumpStatus from './components/PumpStatus';
+import PumpConfigSliders from './components/PumpConfigSliders';
 
 
 export default function App() {
@@ -34,6 +35,9 @@ export default function App() {
           <Tab.Screen 
             name='Configurations'
             component={PumpConfig} />
+        <Tab.Screen 
+            name='Sliders'
+            component={PumpConfigSliders} />
           <Tab.Screen
             name="Pump Data"
             component={PumpStatus}
