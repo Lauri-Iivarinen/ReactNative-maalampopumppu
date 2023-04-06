@@ -25,8 +25,8 @@ export default function PumpConfigSliders({ route, navigation }: any) {
     }
 
     useEffect(() => {
-        doFetch()
-        //setData(fetchOfflineData())
+        //doFetch()
+        setData(fetchOfflineData())
     },[])
 
     useEffect(() => {

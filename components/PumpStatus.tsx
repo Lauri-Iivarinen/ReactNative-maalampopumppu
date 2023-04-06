@@ -16,8 +16,8 @@ export default function PumpStatus() {
     }
 
     useEffect(() => {
-        doFetch()
-        //setData(fetchOfflineData())
+        //doFetch()
+        setData(fetchOfflineData())
     }, [])
 
     return (
