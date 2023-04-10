@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text, Dimensions, ActivityIndicator } from 'react-native';
 import { styles } from '../styles/styles'
 import { LineChart } from 'react-native-chart-kit';
 import { useState } from 'react';
@@ -25,14 +25,12 @@ export default function ElectricityPrice(){
         try {
             const response = await fetch('https://api.porssisahko.net/v1/latest-prices.json')
             const res = await response.json()
-            //console.log(await res)
             setPorssisahko(await res.prices)
             setDataset(next24(await res.prices))
             setLabels(getLabels(await res.prices))
             setStatus(true)
-            //await AsyncStorage.setItem('porssisahko',JSON.parse(res.prices))
         } catch (error) {
-            //setPorssisahko(offline.prices)
+            console.error(error)
         }
     }
     
@@ -52,7 +50,6 @@ export default function ElectricityPrice(){
         })
 
         const day = upToDate ? reverseData.splice(reverseData.indexOf(upToDate) - 1, 24) : []
-        //console.log(day)
         return day
     }
 
@@ -79,14 +76,14 @@ export default function ElectricityPrice(){
         //Only take values from items that are also shown in chart (from this hour -1 ->)
         const hours: sahko[] = get24Hours(sahko).filter(item => {
             const itemDate = new Date(item.startDate);
-            return date.getHours() + 1 < itemDate.getHours()
+            return date.getHours() + 1 < itemDate.getHours() || date.getDate() < itemDate.getDate() || date.getMonth() < itemDate.getMonth() || date.getFullYear() < itemDate.getFullYear()
         })
-
+        
         const result = hours.map(item => {
             const hour = new Date(item.startDate).getUTCHours()
 
             if (hour % 2 === 0) return hour.toString()
-            return ''
+            return ' '
         })
 
         return result
@@ -124,7 +121,7 @@ export default function ElectricityPrice(){
             )
     }else{
         return(
-            <Text>Fetching...</Text>
+            <ActivityIndicator></ActivityIndicator>
         )
     }
    
