@@ -2,14 +2,15 @@ import React, {useEffect, useState} from 'react'
 import { View, Text, FlatList, ScrollView, ActivityIndicator } from 'react-native'
 import { WEATHER_API_KEY } from '@env'
 import { LinearGradient } from 'expo-linear-gradient'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Button } from '@rneui/themed'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-export default function WeatherReport(){
+export default function WeatherReport({route, navigation, result}: any){
 
-    //60.427358, 25.102478
-    const lat = 60.427358
-    const lon = 25.102478
-    const [status, setStatus] = useState(false)
+    const [status, setStatus] = useState(true)
     const [filtered, setFiltered] = useState<any[]>()
+    console.log('result', result)
 
     const getDay = (str: string) => {
         const [date, time] = str.split(' ')
@@ -39,19 +40,27 @@ export default function WeatherReport(){
         setStatus(true)
     }
 
-    const fetchWeatherData = async () => {
-        try {
-            const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&units=metric&appid=' + WEATHER_API_KEY)
-            const result = await response.json()
-            filterWeathers(result.list)
-        } catch (error) {
-            console.error(error)
+    const fetchWeatherData = async (lat: any, lon: any) => {
+        console.log('weatherfetch', lat)
+            try {
+                const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&units=metric&appid=' + WEATHER_API_KEY)
+                const result = await response.json()
+                filterWeathers(result.list)
+            } catch (error) {
+                console.error(error)
+            }
+    }
+
+    const getLatLon = async () => {
+        const lat = await AsyncStorage.getItem('lat')
+        const lon = await AsyncStorage.getItem('lon')
+        if (await lat !== null && await lon !== null){
+           fetchWeatherData(lat, lon)
         }
-        
     }
 
     useEffect(() => {
-        fetchWeatherData()
+        getLatLon()
     }, [])
 
     const timeStampDate = (dt: string) => {
@@ -71,18 +80,33 @@ export default function WeatherReport(){
     const itemSeparator = () => <View style={{height: 1, backgroundColor: 'black'}}></View>
     if(status){
         return(
+            <SafeAreaProvider>
             <LinearGradient
-                style={{flex: 1, flexDirection: 'row'}}
+                style={{flex: 1}}
                 colors={['rgb(200,100,100)','orange']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
             >
+                <Button
+                ViewComponent={LinearGradient} // Don't forget this!
+                linearGradientProps={{
+                    colors: ['black', 'white'],
+                    start: { x: 0, y: 0.5 },
+                    end: { x: 0.8, y: 0.5 },
+                }}
+                onPress={() => {getLatLon()}}
+                >
+                Refresh weather
+                </Button>
+                <View style={{flex: 1, flexDirection: 'row'}}>
                 <FlatList
                 data={filtered}
                 renderItem={({item}) =>
                         <View>
                             <Text style={{fontSize: 20}}>{timeStampDate(item[0].dt_txt)}</Text>
-                            <ScrollView horizontal={true}>
+                            <ScrollView 
+                            horizontal={true}
+                            >
                             <View style={{flexDirection: 'row', padding: 2, paddingLeft: 4}}>
                                 {item.map((row: any, index: number) => <View key={index} 
                                 style={{backgroundColor: 'rgb(230,230,230)', margin: 4, width: 80, borderRadius: 4, justifyContent: 'center', alignItems: 'center'}}
@@ -96,11 +120,16 @@ export default function WeatherReport(){
                     }
                 ItemSeparatorComponent={itemSeparator}
                 />
+                </View>
             </LinearGradient>
+            </SafeAreaProvider>
         )
     }else{
         return(
-            <ActivityIndicator></ActivityIndicator>
+            <View>
+                <ActivityIndicator></ActivityIndicator>
+            
+            </View>
         )
     }
     

@@ -4,7 +4,6 @@ import { View, Text, Dimensions, ActivityIndicator } from 'react-native';
 import { styles } from '../styles/styles'
 import { LineChart } from 'react-native-chart-kit';
 import { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Dataset } from 'react-native-chart-kit/dist/HelperTypes';
 
 export default function ElectricityPrice(){
