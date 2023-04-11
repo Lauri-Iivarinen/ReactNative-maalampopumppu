@@ -13,9 +13,7 @@ export default function DrawerScreen(){
 
     const [currLocation, setCurrLocation] = useState<string>('')
     const [currIpAddress, setCurrIpAddress] = useState<string>('')
-  
 
-  
     const getAsyncStorage = async () => {
       const asyncLocation = await AsyncStorage.getItem('location')
       setCurrLocation(await asyncLocation === null? 'You have not entered location for pump' : 'Pump location: '  + asyncLocation)
@@ -29,13 +27,15 @@ export default function DrawerScreen(){
     }
 
     const fetchLocation = async (loc: string) => {
-        try {
+        try {            
             const response = await fetch('https://www.mapquestapi.com/geocoding/v1/address?key='+MAP_QUEST_API_KEY+'&location=' + loc)
             const result = await response.json()
            
             const lat = await result.results[0].locations[0].displayLatLng.lat.toString()
             const lon = await result.results[0].locations[0].displayLatLng.lng.toString()
+
             saveAndUpdateLatLon(await lat, await lon)
+            
         } catch (error) {
             console.error(error)
         }

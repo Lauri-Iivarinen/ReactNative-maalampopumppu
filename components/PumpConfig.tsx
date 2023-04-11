@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { View, ScrollView, RefreshControl, FlatList } from 'react-native';
 import {HOST} from '@env'
-import { fetchOfflineData, fetchData } from '../util/fetch'
+import { fetchOfflineData, fetchData, fetchWithIp } from '../util/fetch'
 import { getKeywords} from '../util/util'
 import { PumpCodes } from '../types/types';
 import PumpDataListItem from './PumpDataListItem';
@@ -14,13 +14,13 @@ export default function PumpConfig({ route, navigation }: any) {
     const [refreshing, setRefreshing] = useState(false)
 
     const doFetch = async () => {
-        let fetchedData = fetchData()
+        let fetchedData = fetchWithIp()
         setData(await fetchedData)
     }
 
     useEffect(() => {
-        //doFetch()
-        setData(fetchOfflineData())
+        doFetch()
+        //setData(fetchOfflineData())
     }, [])
     
     return (

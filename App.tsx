@@ -31,12 +31,13 @@ export default function App() {
         renderDrawerContent={() => <DrawerScreen ></DrawerScreen>}
       >
       <Header
-      ViewComponent={LinearGradient} // Don't forget this!
-      linearGradientProps={{
-        colors: ['orange', 'rgb(200,100,100)'],
-        start: { x: 0, y: 0.5 },
-        end: { x: 0.5, y: 0.5 },
-      }}
+        ViewComponent={LinearGradient} // Don't forget this!
+        linearGradientProps={{
+          colors: ['orange', 'rgb(200,100,100)'],
+          start: { x: 0, y: 0.5 },
+          end: { x: 0.5, y: 0.5 },
+          style: {padding: 10, borderWidth: 1, borderColor: 'black'}
+        }}
         leftComponent={<Icon name="menu" onPress={() => setOpen((prevOpen) => !prevOpen)}></Icon>}
         centerComponent={<Text style={{fontSize: 20}}>PumpApp</Text>}
         rightComponent={<Text></Text>}
@@ -47,16 +48,16 @@ export default function App() {
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
   
-              if (route.name === 'Home') {
-                iconName = focused
-                  ? 'ios-information-circle'
-                  : 'ios-information-circle-outline';
-              } else if (route.name === 'Tasklist') {
-                iconName = focused ? 'ios-list' : 'ios-list-outline';
+              if (route.name === 'Homepage') {
+                iconName = 'home'
+              } else if (route.name === 'Advanced configs') {
+                iconName = 'settings'
+              } else if (route.name === 'Quick configs') {
+                iconName = 'tune'
+              } else {
+                iconName = 'info'
               }
-  
-              // You can return any component that you like here!
-              return <Icon name={'home'} size={size} color={color}/>;
+              return <Icon name={iconName} size={size} color={color}/>;
             },
             tabBarActiveTintColor: 'tomato',
             tabBarInactiveTintColor: 'gray',
@@ -68,11 +69,11 @@ export default function App() {
             component={Homepage}
             />
           <Tab.Screen 
-            name='Configurations'
-            component={PumpConfig} />
-        <Tab.Screen 
-            name='Sliders'
+            name='Quick configs'
             component={PumpConfigSliders} />
+          <Tab.Screen 
+            name='Advanced configs'
+            component={PumpConfig} />
           <Tab.Screen
             name="Pump Data"
             component={PumpStatus}

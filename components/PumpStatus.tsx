@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import { PumpCodes } from "../types/types";
 import PumpDataListItem from "./PumpDataListItem";
-import { fetchOfflineData, fetchData } from '../util/fetch'
+import { fetchOfflineData, fetchData, fetchWithIp } from '../util/fetch'
 import { getKeywords } from "../util/util";
 
 export default function PumpStatus() {
@@ -11,13 +11,13 @@ export default function PumpStatus() {
     const KEYWORDS = getKeywords('get')
 
     const doFetch = async () => {
-        let fetchedData = fetchData()
+        let fetchedData = fetchWithIp()
         setData(await fetchedData)
     }
 
     useEffect(() => {
-        //doFetch()
-        setData(fetchOfflineData())
+        doFetch()
+        //setData(fetchOfflineData())
     }, [])
 
     return (

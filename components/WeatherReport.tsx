@@ -6,11 +6,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Button } from '@rneui/themed'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-export default function WeatherReport({route, navigation, result}: any){
+export default function WeatherReport({route, navigation}: any){
 
     const [status, setStatus] = useState(true)
     const [filtered, setFiltered] = useState<any[]>()
-    console.log('result', result)
 
     const getDay = (str: string) => {
         const [date, time] = str.split(' ')
@@ -41,14 +40,13 @@ export default function WeatherReport({route, navigation, result}: any){
     }
 
     const fetchWeatherData = async (lat: any, lon: any) => {
-        console.log('weatherfetch', lat)
-            try {
-                const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&units=metric&appid=' + WEATHER_API_KEY)
-                const result = await response.json()
-                filterWeathers(result.list)
-            } catch (error) {
-                console.error(error)
-            }
+        try {
+            const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&units=metric&appid=' + WEATHER_API_KEY)
+            const result = await response.json()
+            filterWeathers(result.list)
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     const getLatLon = async () => {
@@ -90,7 +88,7 @@ export default function WeatherReport({route, navigation, result}: any){
                 <Button
                 ViewComponent={LinearGradient} // Don't forget this!
                 linearGradientProps={{
-                    colors: ['black', 'white'],
+                    colors: ['purple', 'black'],
                     start: { x: 0, y: 0.5 },
                     end: { x: 0.8, y: 0.5 },
                 }}

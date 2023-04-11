@@ -27,7 +27,8 @@ const transformToPumpCodes = (item: any[]) => {
 
 export const fetchWithIp = async () => {
     const ip = await AsyncStorage.getItem('ipAddress')
-    if (await ip !== null) fetchData(ip!)
+    if (await ip !== null) return fetchData(ip!)
+    else return []
 }
 
 /**Fetch data from pump, REQUIRES same WLAN*/

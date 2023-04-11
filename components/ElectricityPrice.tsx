@@ -5,15 +5,10 @@ import { styles } from '../styles/styles'
 import { LineChart } from 'react-native-chart-kit';
 import { useState } from 'react';
 import { Dataset } from 'react-native-chart-kit/dist/HelperTypes';
+import { sahko } from '../types/types';
 
-export default function ElectricityPrice(){
-    interface sahko {
-        price: number;
-        startDate: string;
-        endDate: string;
-    }
+export default function ElectricityPrice() {
     
-
     const [porssisahko, setPorssisahko] = useState<sahko[]>([])
     const screenWidth = Dimensions.get("window").width;
     const [status, setStatus] = useState(false)
@@ -91,7 +86,7 @@ export default function ElectricityPrice(){
     const data = {
         labels: labels,
         datasets: dataset,
-        legend: ['Pörssisähkö']
+        legend: ['Finnish electricity exchange (cent/kwh)']
     }
 
     const chartConfig = {

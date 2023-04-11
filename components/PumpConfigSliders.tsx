@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text} from 'react-native';
 import {HOST} from '@env'
-import { fetchOfflineData, fetchData } from '../util/fetch'
+import { fetchOfflineData, fetchData, fetchWithIp } from '../util/fetch'
 import { getKeywords} from '../util/util'
 import { PumpCodes } from '../types/types';
 import PumpDataListItem from './PumpDataListItem';
 import Slider from '@react-native-community/slider';
+import { Button, Icon } from '@rneui/themed';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function PumpConfigSliders({ route, navigation }: any) {
     //idx-> ID, val -> VALUE, USE Promise.all()
@@ -20,13 +22,13 @@ export default function PumpConfigSliders({ route, navigation }: any) {
     const [status, setStatus] = useState('fetching')
 
     const doFetch = async () => {
-        let fetchedData = fetchData()
+        let fetchedData = fetchWithIp()
         setData(await fetchedData)
     }
 
     useEffect(() => {
-        //doFetch()
-        setData(fetchOfflineData())
+        doFetch()
+        //setData(fetchOfflineData())
     },[])
 
     useEffect(() => {
@@ -94,8 +96,18 @@ export default function PumpConfigSliders({ route, navigation }: any) {
                         <Text>23</Text>
                     </View>
                 </View>
-                <View style={{ flex: 1 }}>
-                    <Button title="Update" onPress={updateConfig}></Button>
+                <View style={{ flex: 1, alignItems: 'center'}}>
+                <Button
+                ViewComponent={LinearGradient} // Don't forget this!
+                linearGradientProps={{
+                    colors: ['rgb(200,100,100)','orange'],
+                    start: { x: 0, y: 0.5 },
+                    end: { x: 1, y: 0.5 },
+                }}
+                onPress={updateConfig}
+                >
+                Update <Icon name='update' color='white'></Icon>
+                </Button>
                 </View>
             </View>
         )

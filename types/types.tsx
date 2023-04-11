@@ -9,3 +9,9 @@ export interface PumpCodes{
     value: any;
     valueType?: string;
 }
+
+export interface sahko {
+    price: number;
+    startDate: string;
+    endDate: string;
+}
