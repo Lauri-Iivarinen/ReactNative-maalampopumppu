@@ -1,6 +1,7 @@
 import { HOST } from "@env"
 import { PumpCodes } from "../types/types"
 import { CODES, OFFLINEDATA } from "./util"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 //Added both fetches here for easy use in multiple components
 
@@ -24,10 +25,15 @@ const transformToPumpCodes = (item: any[]) => {
     return list
 }
 
+export const fetchWithIp = async () => {
+    const ip = await AsyncStorage.getItem('ipAddress')
+    
+}
+
 /**Fetch data from pump, REQUIRES same WLAN*/
-export const fetchData = async () => {
+export const fetchData = async (ip=HOST) => {
     try {
-        const response = await fetch('http://' + HOST + '/api/alldata')
+        const response = await fetch('http://' + ip + '/api/alldata')
         const result = await response.json()
         const pumpCodes: PumpCodes[] = await transformToPumpCodes(result)
         return await pumpCodes
