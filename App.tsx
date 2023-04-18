@@ -66,7 +66,7 @@ export default function App() {
           initialRouteName='Homepage'
           activeColor="orange"
           inactiveColor="rgb(200,100,100)"
-          barStyle={{ height: 70 }}
+          barStyle={{ height: 80 }}
           shifting={true}>
           <Tab.Screen 
             name='Homepage' 
