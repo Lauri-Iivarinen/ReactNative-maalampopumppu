@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button, Icon, Input } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MAP_QUEST_API_KEY } from '@env';
+import { styles } from '../util/stylesheet';
 
 
 export default function DrawerScreen(){
@@ -59,11 +60,7 @@ export default function DrawerScreen(){
 
     return(
         <View 
-        style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}
+        style={styles.centered}
         >
             <Text>{currLocation}</Text>
             <Input placeholder='Location (city)' value={location} onChangeText={(e) => setLocation(e)}></Input>
@@ -78,7 +75,7 @@ export default function DrawerScreen(){
                 }}
                 onPress={saveAsyncStorage}
             >
-                Save<Icon name='save' color='white'></Icon>
+                Save <Icon name='save' color='white'></Icon>
             </Button>
         </View>
     )

@@ -64,3 +64,23 @@ export const fetchOfflineData = () => {
     
     return list
 }
+
+export const posthWithIp = async (variable: PumpCodes, value: any) => {
+    const ip = await AsyncStorage.getItem('ipAddress')
+    if (await ip !== null) return postToPump(variable, value, ip!)
+    else return []
+}
+
+const postToPump = async (variable: PumpCodes, value: any, ip=HOST) => {
+    console.log(variable, value)
+    if(variable.value.toString() === value.toString()) return {msg: 'ok'}
+    try {
+        const response = await fetch('http://' + ip + '/api/set?idx=' + variable.code + '&val=' + value)
+        const result = await response.json()
+        //console.log(await result)
+        return await result
+    } catch (error) {
+        console.error(error)
+        return {msg: 'not ok'} //REMOVE ON WORKING
+    }
+}

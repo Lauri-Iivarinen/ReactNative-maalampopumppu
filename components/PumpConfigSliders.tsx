@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import { View, Text} from 'react-native';
 import {HOST} from '@env'
-import { fetchOfflineData, fetchData, fetchWithIp } from '../util/fetch'
+import { fetchOfflineData, fetchData, fetchWithIp, posthWithIp } from '../util/fetch'
 import { getKeywords} from '../util/util'
 import { PumpCodes } from '../types/types';
 import PumpDataListItem from './PumpDataListItem';
 import Slider from '@react-native-community/slider';
 import { Button, Icon } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Dialog } from '@rneui/themed';
+import { Snackbar } from "@react-native-material/core";
+import { styles } from '../util/stylesheet';
 
 export default function PumpConfigSliders({ route, navigation }: any) {
     //idx-> ID, val -> VALUE, USE Promise.all()
@@ -20,6 +23,8 @@ export default function PumpConfigSliders({ route, navigation }: any) {
     const [roomTemp, setRoomTemp] = useState<PumpCodes>()
     const [roomTempValue, setRoomTempValue] = useState<number>()
     const [status, setStatus] = useState('fetching')
+    const [confirmDialog, setConfirmDialog] = useState(false)
+    const [snackbarVisible, setSnackbarVisible] = useState(false)
 
     const doFetch = async () => {
         let fetchedData = fetchWithIp()
@@ -27,8 +32,8 @@ export default function PumpConfigSliders({ route, navigation }: any) {
     }
 
     useEffect(() => {
-        doFetch()
-        //setData(fetchOfflineData())
+        //doFetch()
+        setData(fetchOfflineData())
     },[])
 
     useEffect(() => {
@@ -37,33 +42,52 @@ export default function PumpConfigSliders({ route, navigation }: any) {
         if (data.length > 0) {
             curve = data.find(item => item.name === 'Heat set 1')
             setHeatCurve(curve)
+            setHeatCurveValue(curve!.value)
 
             roomTemp = data.find(item => item.name === 'Room temp setpoint')
             //console.log(roomTemp)
             setRoomTemp(roomTemp)
+            setRoomTempValue(roomTemp!.value)
 
             setStatus('')
         }
     }, [data])
 
-    const postToPump = async (variable: PumpCodes, value: number) => {
-        const response = await fetch('http://' + HOST + '/api/set?idx=' + variable.code + '&val=' + value)
-        const result = await response.json()
-        //console.log(await result)
-        return await result
-        // */
+    const toggleSnackbar = () => {
+        setSnackbarVisible(true)
+        setTimeout(() => setSnackbarVisible(false), 4000)
+    }
+ 
+    const checkResponse = (response: any, json: PumpCodes, newValue: number) => {
+        if (response.msg === 'ok') {
+            const code: PumpCodes = {
+                code: json.code,
+                name: json.name,
+                value: newValue,
+                valueType: json.valueType
+            }
+            toggleSnackbar()
+            return code
+        }else{
+            return json
+        }
     }
     
     const updateConfig = () => {
-        Promise.all([postToPump(heatCurve!, heatCurveValue!), postToPump(roomTemp!, roomTempValue!)]).then(values => console.log(values))
+        setConfirmDialog(!confirmDialog)
+        Promise.all([posthWithIp(heatCurve!, heatCurveValue!), posthWithIp(roomTemp!, roomTempValue!)])
+            .then(responses => {
+                setHeatCurve(checkResponse(responses[0], heatCurve!, heatCurveValue!))
+                setRoomTemp(checkResponse(responses[1], roomTemp!, roomTempValue!))
+            })
         //postToPump(heatCurve!, heatCurveValue!)
     }
 
     if (status.length === 0) {
         return (
             <View style={{flex: 1}}>
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <Text>{heatCurve?.name}</Text>
+                <View style={styles.centered}>
+                    <Text style={styles.textStyle}>Heating curve</Text>
                     <Text>{heatCurve?.value / 10}</Text>
                     <Text style={{color: 'red'}}>{heatCurveValue ? heatCurveValue / 10 : heatCurve?.value / 10}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center'}}>
@@ -79,7 +103,7 @@ export default function PumpConfigSliders({ route, navigation }: any) {
                         <Text>2.2</Text>
                     </View>
                 </View>
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.centered}>
                     <Text>{roomTemp?.name}</Text>
                     <Text>{roomTemp?.value / 10}</Text>
                     <Text style={{ color: 'red' }}>{ roomTempValue? (roomTempValue / 10).toFixed(1) : (roomTemp?.value / 10).toFixed(1)}</Text>
@@ -104,11 +128,49 @@ export default function PumpConfigSliders({ route, navigation }: any) {
                     start: { x: 0, y: 0.5 },
                     end: { x: 1, y: 0.5 },
                 }}
-                onPress={updateConfig}
+                onPress={() => setConfirmDialog(!confirmDialog)}
                 >
                 Update <Icon name='update' color='white'></Icon>
                 </Button>
                 </View>
+                <Dialog 
+                isVisible={confirmDialog}
+                onBackdropPress={() => setConfirmDialog(!confirmDialog)}
+                overlayStyle={styles.centeredNoFlex}
+                >
+                <Dialog.Title title="Are you sure?" />
+                <Dialog.Actions>
+                    <Dialog.Button
+                        type='solid'
+                        ViewComponent={LinearGradient} // Don't forget this!
+                        linearGradientProps={{
+                            colors: ['rgb(200,100,100)','orange'],
+                            start: { x: 0, y: 0.5 },
+                            end: { x: 1, y: 0.5 },
+                        }}
+                        onPress={() => setConfirmDialog(!confirmDialog)}
+                        >
+                        No <Icon name='cancel' color='white'></Icon>
+                    </Dialog.Button>
+                    <Dialog.Button
+                        type='solid'
+                        ViewComponent={LinearGradient} // Don't forget this!
+                        linearGradientProps={{
+                            colors: ['rgb(200,100,100)','orange'],
+                            start: { x: 0, y: 0.5 },
+                            end: { x: 1, y: 0.5 },
+                        }}
+                        onPress={updateConfig}
+                    >
+                    Yes <Icon name='check' color='white'></Icon>
+                    </Dialog.Button>
+                </Dialog.Actions>
+                </Dialog>
+            {snackbarVisible
+            &&<Snackbar
+            message='Successfully updated'
+            style={styles.snackbarStyle}
+            ></Snackbar>}
             </View>
         )
     } else {

@@ -3,7 +3,7 @@ import { View, Text, FlatList, ScrollView, ActivityIndicator } from 'react-nativ
 import { WEATHER_API_KEY } from '@env'
 import { LinearGradient } from 'expo-linear-gradient'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Button } from '@rneui/themed'
+import { Button, Icon } from '@rneui/themed'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 export default function WeatherReport({route, navigation}: any){
@@ -86,15 +86,17 @@ export default function WeatherReport({route, navigation}: any){
                 end={{ x: 1, y: 1 }}
             >
                 <Button
+                type='solid'
+                style={{borderWidth: 1}}
                 ViewComponent={LinearGradient} // Don't forget this!
                 linearGradientProps={{
-                    colors: ['purple', 'black'],
-                    start: { x: 0, y: 0.5 },
-                    end: { x: 0.8, y: 0.5 },
+                    colors: ['orange','rgb(200,100,100)'],
+                    start: { x: 0, y: 0 },
+                    end: { x: 0.8, y: 1 },
                 }}
                 onPress={() => {getLatLon()}}
                 >
-                Refresh weather
+               <Icon name="refresh" color="white" /> Refresh weather <Icon name="cloud" color="white"/>
                 </Button>
                 <View style={{flex: 1, flexDirection: 'row'}}>
                 <FlatList

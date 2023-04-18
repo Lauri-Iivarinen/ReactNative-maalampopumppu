@@ -15,6 +15,9 @@ import { Drawer } from 'react-native-drawer-layout';
 import DrawerScreen from './components/DrawerScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { WEATHER_API_KEY } from '@env';
+import PumpTab from './components/PumpTab';
+
+import { styles } from './util/stylesheet';
 
 export default function App() {
   
@@ -36,10 +39,10 @@ export default function App() {
           colors: ['orange', 'rgb(200,100,100)'],
           start: { x: 0, y: 0.5 },
           end: { x: 0.5, y: 0.5 },
-          style: {padding: 10, borderWidth: 1, borderColor: 'black'}
+          style: styles.header
         }}
         leftComponent={<Icon name="menu" onPress={() => setOpen((prevOpen) => !prevOpen)}></Icon>}
-        centerComponent={<Text style={{fontSize: 20}}>PumpApp</Text>}
+        centerComponent={<Text style={[styles.textStyle,{fontSize: 20}]}>PumpApp</Text>}
         rightComponent={<Text></Text>}
       />
       <NavigationContainer>
@@ -50,9 +53,7 @@ export default function App() {
   
               if (route.name === 'Homepage') {
                 iconName = 'home'
-              } else if (route.name === 'Advanced configs') {
-                iconName = 'settings'
-              } else if (route.name === 'Quick configs') {
+              } else if (route.name === 'Quick setup') {
                 iconName = 'tune'
               } else {
                 iconName = 'info'
@@ -69,14 +70,11 @@ export default function App() {
             component={Homepage}
             />
           <Tab.Screen 
-            name='Quick configs'
+            name='Quick setup'
             component={PumpConfigSliders} />
           <Tab.Screen 
-            name='Advanced configs'
-            component={PumpConfig} />
-          <Tab.Screen
-            name="Pump Data"
-            component={PumpStatus}
+            name="Pump"
+            component={PumpTab}
           />
         </Tab.Navigator>
       </NavigationContainer>

@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { FlatList, RefreshControl, View } from "react-native";
 import { PumpCodes } from "../types/types";
 import PumpDataListItem from "./PumpDataListItem";
 import { fetchOfflineData, fetchData, fetchWithIp } from '../util/fetch'
 import { getKeywords } from "../util/util";
+import { ScrollView } from "react-native-gesture-handler";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function PumpStatus() {
 
     const [data, setData] = useState<PumpCodes[]>([])
     const KEYWORDS = getKeywords('get')
+    const [refreshing, setRefreshing] = useState(false)
 
     const doFetch = async () => {
         let fetchedData = fetchWithIp()
@@ -16,18 +19,23 @@ export default function PumpStatus() {
     }
 
     useEffect(() => {
-        doFetch()
-        //setData(fetchOfflineData())
+        //doFetch()
+        setData(fetchOfflineData())
     }, [])
 
     return (
-        <View style={{ flex: 1, flexDirection: 'column', flexWrap:'wrap', flexBasis:250}}>
-            {KEYWORDS.map((keyword,index) => {
-                return (
-                    <PumpDataListItem key={index} props={{ data: data, keyword: keyword }} />
-                )
-            })}
-        </View>
+        <LinearGradient
+            style={{ flex: 1, padding: 3}}
+            colors={['rgb(200,100,100)','orange']}
+            start={{ x: 0, y: 0.6 }}
+            end={{ x: 1, y: 1 }}
+        >
+            <FlatList
+                data={KEYWORDS}
+                renderItem={({ item }) => <PumpDataListItem props={{ data: data, keyword: item, keywordType: 'get' }}></PumpDataListItem>}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={doFetch}></RefreshControl>}
+            ></FlatList>
+        </LinearGradient>
     )
 }
 

@@ -1,5 +1,13 @@
 /** Pump variable id, name and type */
 export const CODES = [
+    {name: "Compressor  0W", code: "1A01", valueType: "Status"},
+    {name: "Add heat step 1  0W", code: "1A02", valueType: "Status"},
+    {name: "Add heat step 2  0W", code: "1A03", valueType: "Status"},
+    {name: "Pump Cold circuit  0W", code: "1A04", valueType: "Status"},
+    {name: "Pump Heat circuit  0W", code: "1A05", valueType: "Status"},
+    {name: "Pump Radiator  0W", code: "1A06", valueType: "Status"},
+    {name: "Switch valve 1  0W", code: "1A07", valueType: "Status"},
+    {name: "Alarm  0W", code: "1A20", valueType: "Status"},
     {name: "Radiator Return", code: "0001", valueType: "Temp Sensor"},
     {name: "Radiator Forward", code: "0002", valueType: "Temp Sensor"},
     {name: "Heat carrier Return", code: "0003", valueType: "Temp Sensor"},
@@ -25,14 +33,6 @@ export const CODES = [
     {name: "External control", code: "1233", valueType: "Set Status"},
     {name: "Summer mode", code: "020A", valueType: "Set temp"},
     {name: "Holiday mode", code: "2210", valueType: "Set Hour"},
-    {name: "Compressor  0W", code: "1A01", valueType: "Status"},
-    {name: "Add heat step 1  0W", code: "1A02", valueType: "Status"},
-    {name: "Add heat step 2  0W", code: "1A03", valueType: "Status"},
-    {name: "Pump Cold circuit  0W", code: "1A04", valueType: "Status"},
-    {name: "Pump Heat circuit  0W", code: "1A05", valueType: "Status"},
-    {name: "Pump Radiator  0W", code: "1A06", valueType: "Status"},
-    {name: "Switch valve 1  0W", code: "1A07", valueType: "Status"},
-    {name: "Alarm  0W", code: "1A20", valueType: "Status"},
     {name: "Alarm Code", code: "BA91", valueType: "Number"},
     {name: "Compr. cons. heating", code: "6C55", valueType: "Time Hours"},
     {name: "Compr. cons. hotwat", code: "6C56", valueType: "Time Hours"},
@@ -61,3 +61,4 @@ export const getKeywords = (keyword: 'set'|'get') => {
     })
     return keywords
 }
+
