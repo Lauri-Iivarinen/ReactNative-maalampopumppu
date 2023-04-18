@@ -1,11 +1,11 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { View, Text, Dimensions, ActivityIndicator } from 'react-native';
-import { styles } from '../styles/styles'
 import { LineChart } from 'react-native-chart-kit';
 import { useState } from 'react';
 import { Dataset } from 'react-native-chart-kit/dist/HelperTypes';
 import { sahko } from '../types/types';
+import { styles } from '../util/stylesheet';
 
 export default function ElectricityPrice() {
     

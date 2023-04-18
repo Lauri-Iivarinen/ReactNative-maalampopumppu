@@ -1,7 +1,5 @@
 import { StyleSheet } from "react-native";
 
-import { useFonts, AlegreyaSC_400Regular } from "@expo-google-fonts/alegreya-sc";
-
 export const styles = StyleSheet.create({
     header: {
         padding: 10,
@@ -28,6 +26,11 @@ export const styles = StyleSheet.create({
         bottom: 16
     },
     textStyle: {
-        fontFamily: 'AlegreyaSC_400Regular'
+    },
+    listLineBreak: {
+        height: 1,
+        marginRight: 5,
+        marginLeft: 5,
+        backgroundColor: 'grey'
     }
 })

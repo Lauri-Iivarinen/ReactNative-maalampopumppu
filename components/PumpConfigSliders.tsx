@@ -104,8 +104,8 @@ export default function PumpConfigSliders({ route, navigation }: any) {
                     </View>
                 </View>
                 <View style={styles.centered}>
-                    <Text>{roomTemp?.name}</Text>
-                    <Text>{roomTemp?.value / 10}</Text>
+                    <Text>Room temperature setpoint</Text>
+                    <Text>{roomTemp?.value / 10}°C</Text>
                     <Text style={{ color: 'red' }}>{ roomTempValue? (roomTempValue / 10).toFixed(1) : (roomTemp?.value / 10).toFixed(1)}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                         <Text>18</Text>

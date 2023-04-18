@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Homepage from './components/Homepage';
 import React, {useState, useEffect} from 'react'
 import PumpConfig from './components/PumpConfig';
@@ -16,13 +16,12 @@ import DrawerScreen from './components/DrawerScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { WEATHER_API_KEY } from '@env';
 import PumpTab from './components/PumpTab';
-
 import { styles } from './util/stylesheet';
 
 export default function App() {
   
 
-  const Tab = createBottomTabNavigator()
+  const Tab = createMaterialBottomTabNavigator()
   const [open, setOpen] = useState(false)
  
   return (
@@ -48,7 +47,7 @@ export default function App() {
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
+            tabBarIcon: ({ color }) => {
               let iconName;
   
               if (route.name === 'Homepage') {
@@ -58,13 +57,17 @@ export default function App() {
               } else {
                 iconName = 'info'
               }
-              return <Icon name={iconName} size={size} color={color}/>;
+              return <Icon name={iconName} color={color}/>;
             },
             tabBarActiveTintColor: 'tomato',
             tabBarInactiveTintColor: 'gray',
             headerShown: false
           })}
-          initialRouteName='Homepage'>
+          initialRouteName='Homepage'
+          activeColor="orange"
+          inactiveColor="rgb(200,100,100)"
+          barStyle={{ height: 70 }}
+          shifting={true}>
           <Tab.Screen 
             name='Homepage' 
             component={Homepage}

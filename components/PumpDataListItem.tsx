@@ -75,9 +75,10 @@ export default function PumpDataListItem({ props }: any) {
             >
                 {filterByKeyword(props.data, props.keyword).map(item => {
                     return (
-                        <View>
+                        <View key={item.code}>
                             {props.keywordType === 'set'
-                            ?<ListItem.Swipeable key={item.code}
+                            ?<ListItem.Swipeable
+                                bottomDivider={true}
                                 rightContent={(reset) => (
                                     <Button
                                         ViewComponent={LinearGradient} // Don't forget this!
@@ -94,8 +95,8 @@ export default function PumpDataListItem({ props }: any) {
                                         buttonStyle={{ minHeight: '100%'}}
                                         >
                                         Update <Icon name='update' color='white'></Icon>
-                                        </Button>
-                                    )}
+                                    </Button>
+                                )}
                             >
                                 <ListItem.Content style={{flexDirection: 'column'}}>
                                     <ListItem.Title>{item.name}</ListItem.Title>
@@ -105,7 +106,9 @@ export default function PumpDataListItem({ props }: any) {
                                     }
                                 </ListItem.Content>
                             </ListItem.Swipeable>
-                            :<ListItem key={item.code}>
+                            :<ListItem
+                                    bottomDivider={true}
+                            >
                                 <ListItem.Content style={{flexDirection: 'column'}}>
                                     <ListItem.Title>{item.name}</ListItem.Title>
                                     {props.keyword === 'Status' || props.keyword === 'Set Status'
@@ -113,9 +116,9 @@ export default function PumpDataListItem({ props }: any) {
                                     :<ListItem.Subtitle>{getValue(item.value, item.valueType!)}</ListItem.Subtitle>
                                     }
                                 </ListItem.Content>
+                                <ListItem.Content />
                             </ListItem>
                             }
-                        
                         </View>
                     )
                 })}
