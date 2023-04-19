@@ -5,11 +5,14 @@ import { LinearGradient } from 'expo-linear-gradient'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Button, Icon } from '@rneui/themed'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { styles } from '../util/stylesheet'
+import { RefreshControl } from 'react-native'
 
 export default function WeatherReport({route, navigation}: any){
 
     const [status, setStatus] = useState(true)
     const [filtered, setFiltered] = useState<any[]>()
+    const [refreshing, setRefreshing] = useState(false);
 
     const getDay = (str: string) => {
         const [date, time] = str.split(' ')
@@ -35,7 +38,7 @@ export default function WeatherReport({route, navigation}: any){
             reportsForDays.push(filtered)
 
         })
-        setFiltered(reportsForDays)
+        setFiltered(reportsForDays.slice(0,3))
         setStatus(true)
     }
 
@@ -80,47 +83,36 @@ export default function WeatherReport({route, navigation}: any){
         return(
             <SafeAreaProvider>
             <LinearGradient
-                style={{flex: 1}}
+                style={{flex: 1, borderWidth: 2}}
                 colors={['rgb(200,100,100)','orange']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
             >
-                <Button
-                type='solid'
-                style={{borderWidth: 1}}
-                ViewComponent={LinearGradient} // Don't forget this!
-                linearGradientProps={{
-                    colors: ['orange','rgb(200,100,100)'],
-                    start: { x: 0, y: 0 },
-                    end: { x: 0.8, y: 1 },
-                }}
-                onPress={() => {getLatLon()}}
+                <ScrollView
+                    style={{ flex: 1 }}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={getLatLon}></RefreshControl>}
                 >
-               <Icon name="refresh" color="white" /> Refresh weather <Icon name="cloud" color="white"/>
-                </Button>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                <FlatList
-                data={filtered}
-                renderItem={({item}) =>
-                        <View>
-                            <Text style={{fontSize: 20}}>{timeStampDate(item[0].dt_txt)}</Text>
-                            <ScrollView 
-                            horizontal={true}
-                            >
-                            <View style={{flexDirection: 'row', padding: 2, paddingLeft: 4}}>
-                                {item.map((row: any, index: number) => <View key={index} 
-                                style={{backgroundColor: 'rgb(230,230,230)', margin: 4, width: 80, borderRadius: 4, justifyContent: 'center', alignItems: 'center'}}
+                    {filtered?.map((item, index) => {
+                        return(
+                            <View style={{height: 75}}>
+                                <Text style={{marginLeft: 8, fontSize: 20}}>{timeStampDate(item[0].dt_txt)}</Text>
+                                <ScrollView 
+                                horizontal={true}
                                 >
-                                    <Text style={{flex: 1}} >{Math.round(row.main.temp)}°C</Text>
-                                    <Text>{timeStampHours(row.dt_txt)}</Text>
-                                    </View>)}
+                                <View style={{flexDirection: 'row', padding: 2, paddingLeft: 4}}>
+                                    {item.map((row: any, index: number) => <View key={index} 
+                                    style={{backgroundColor: 'rgb(230,230,230)', margin: 4, width: 80, borderRadius: 4, justifyContent: 'center', alignItems: 'center'}}
+                                    >
+                                        <Text style={{flex: 1}} >{Math.round(row.main.temp)}°C</Text>
+                                        <Text>{timeStampHours(row.dt_txt)}</Text>
+                                        </View>)}
+                                </View>
+                                </ScrollView>
+                                <View style={styles.listLineBreak}></View>
                             </View>
-                            </ScrollView>
-                        </View>
-                    }
-                ItemSeparatorComponent={itemSeparator}
-                />
-                </View>
+                        )
+                    })}
+                </ScrollView>
             </LinearGradient>
             </SafeAreaProvider>
         )

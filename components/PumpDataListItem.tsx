@@ -6,43 +6,15 @@ import { Icon } from "@rneui/base";
 import { LinearGradient } from "expo-linear-gradient";
 import { posthWithIp } from "../util/fetch";
 import { styles } from "../util/stylesheet";
+import { getValue } from "../util/util";
 
 
 export default function PumpDataListItem({ props }: any) {
 
-    const [expanded, setExpanded] = useState(props.keyword === 'Status' ? true : false)
+    const [expanded, setExpanded] = useState(false)
     const [activeData, setActiveData] = useState<PumpCodes>()
     const [confirmDialog, setConfirmDialog] = useState(false)
     const [updateValue, setUpdateValue] = useState<string>('')
-
-    const getValue = (value: number, keyword: string) => {
-        switch (keyword) {
-            case 'Status':
-                return value === 0 ? 'OFF' : 'ON'
-            case 'Percent usage':
-                return value + '%'
-            case 'Temp variable':
-                return (value / 10).toFixed(2) + ' °C'
-            case 'Number':
-                return value
-            case 'Time Hours':
-                return value + ' h'
-            case 'Set number':
-                return (value/10).toFixed(2)
-            case 'Set Minutes':
-                return value + ' min'
-            case 'Set Status':
-                return value === 0 ? 'OFF' : 'ON'
-            case 'Set Hour':
-                return value + ' h'
-            case 'Temp Sensor':
-                return (value / 10).toFixed(2) + ' °C'
-            case 'Set temp':
-                return (value / 10).toFixed(2) + ' °C'
-            default:
-                return value + ' raw value'
-        }
-    }
 
     const filterByKeyword = (data: PumpCodes[], keyword: string) => {
         return data.filter(item => item.valueType === keyword)
@@ -56,7 +28,7 @@ export default function PumpDataListItem({ props }: any) {
     const updateData = async () => {
         setConfirmDialog(false)
         const response = await posthWithIp(activeData!, updateValue)
-        if(await response.msg === 'ok') props.snackbar()//console.log(response)
+        if(await response.response === 'Ok') props.snackbar()//console.log(response)
         
         setUpdateValue('')
     }

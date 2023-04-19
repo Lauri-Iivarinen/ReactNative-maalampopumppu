@@ -27,8 +27,8 @@ export default function PumpConfig({ route, navigation }: any) {
     }
 
     useEffect(() => {
-        //doFetch()
-        setData(fetchOfflineData())
+        doFetch()
+        //setData(fetchOfflineData())
     }, [])
     
     return (

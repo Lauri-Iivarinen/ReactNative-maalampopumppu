@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text} from 'react-native';
+import { View, Text, RefreshControl} from 'react-native';
 import {HOST} from '@env'
 import { fetchOfflineData, fetchData, fetchWithIp, posthWithIp } from '../util/fetch'
 import { getKeywords} from '../util/util'
@@ -11,18 +11,22 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Dialog } from '@rneui/themed';
 import { Snackbar } from "@react-native-material/core";
 import { styles } from '../util/stylesheet';
+import { ActivityIndicator } from 'react-native-paper';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function PumpConfigSliders({ route, navigation }: any) {
     //idx-> ID, val -> VALUE, USE Promise.all()
     const POSTENDPOINT = 'http://' + HOST + 'api/set?idx=2204&val=220'
     const [data, setData] = useState<PumpCodes[]>([])
     const KEYWORDS = getKeywords('set')
+    const [refreshing, setRefreshing] = useState(false);
 
     const [heatCurve, setHeatCurve] = useState<PumpCodes>()
     const [heatCurveValue, setHeatCurveValue] = useState<number>()
     const [roomTemp, setRoomTemp] = useState<PumpCodes>()
     const [roomTempValue, setRoomTempValue] = useState<number>()
-    const [status, setStatus] = useState('fetching')
+    const [status, setStatus] = useState('Fetching...')
     const [confirmDialog, setConfirmDialog] = useState(false)
     const [snackbarVisible, setSnackbarVisible] = useState(false)
 
@@ -32,8 +36,8 @@ export default function PumpConfigSliders({ route, navigation }: any) {
     }
 
     useEffect(() => {
-        //doFetch()
-        setData(fetchOfflineData())
+        doFetch()
+        //setData(fetchOfflineData())
     },[])
 
     useEffect(() => {
@@ -59,7 +63,7 @@ export default function PumpConfigSliders({ route, navigation }: any) {
     }
  
     const checkResponse = (response: any, json: PumpCodes, newValue: number) => {
-        if (response.msg === 'ok') {
+        if (response.response === 'Ok') {
             const code: PumpCodes = {
                 code: json.code,
                 name: json.name,
@@ -85,7 +89,11 @@ export default function PumpConfigSliders({ route, navigation }: any) {
 
     if (status.length === 0) {
         return (
-            <View style={{flex: 1}}>
+            <SafeAreaProvider>
+                <ScrollView
+                    contentContainerStyle={styles.centered}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={doFetch}></RefreshControl>}
+                >
                 <View style={styles.centered}>
                     <Text style={styles.textStyle}>Heating curve</Text>
                     <Text>{heatCurve?.value / 10}</Text>
@@ -171,12 +179,14 @@ export default function PumpConfigSliders({ route, navigation }: any) {
             message='Successfully updated'
             style={styles.snackbarStyle}
             ></Snackbar>}
-            </View>
+            </ScrollView>
+            </SafeAreaProvider>
         )
     } else {
         return(
-            <View style={{flex: 1}}>
-                <Text>{ status }</Text>
+            <View style={styles.centered}>
+                <ActivityIndicator size='large'></ActivityIndicator>
+                <Text style={{marginTop: 20}}>{ status }</Text>
             </View>
         )
     }

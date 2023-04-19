@@ -1,3 +1,5 @@
+import Icon from "react-native-vector-icons/Ionicons";
+
 /** Pump variable id, name and type */
 export const CODES = [
     {name: "Compressor  0W", code: "1A01", valueType: "Status"},
@@ -62,3 +64,37 @@ export const getKeywords = (keyword: 'set'|'get') => {
     return keywords
 }
 
+export const getValue = (value: number, keyword: string) => {
+    switch (keyword) {
+        case 'Status':
+            return value === 0 ? 'OFF' : 'ON'
+        case 'Percent usage':
+            return value + '%'
+        case 'Temp variable':
+            return (value / 10).toFixed(2) + ' °C'
+        case 'Number':
+            return value
+        case 'Time Hours':
+            return value + ' h'
+        case 'Set number':
+            return (value/10).toFixed(2)
+        case 'Set Minutes':
+            return value + ' min'
+        case 'Set Status':
+            return value === 0 ? 'OFF' : 'ON'
+        case 'Set Hour':
+            return value + ' h'
+        case 'Temp Sensor':
+            return (value / 10).toFixed(2) + ' °C'
+        case 'Set temp':
+            return (value / 10).toFixed(2) + ' °C'
+        default:
+            return value + ' raw value'
+    }
+}
+
+export const getFrontPageValue = ( name: string, value: number, keyword: string) => {
+    if (name === 'Heat set 1' || name === 'Radiator Return') return getValue(value, keyword)
+    else if (name === 'Alarm  0W') return 'No alarms'
+    else return <Icon name={value === 0 ? 'power-outline' : 'play-outline'} size={30} color={value === 0 ? 'red' : 'green'} />
+}

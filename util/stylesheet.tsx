@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         padding: 3
     },
-    snackbarStyle : {
+    snackbarStyle: {
         position: "absolute",
         start: 16,
         end: 16,
@@ -31,6 +31,16 @@ export const styles = StyleSheet.create({
         height: 1,
         marginRight: 5,
         marginLeft: 5,
-        backgroundColor: 'grey'
+        backgroundColor: 'black'
+    },
+    cardContent: {
+        flex: 1,
+        margin: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+        borderWidth: 1,
+        padding: 2,
+        backgroundColor: 'white'
     }
 })
