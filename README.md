@@ -24,6 +24,7 @@ With the application you can:
 
 # Screenshots
 <p float="left">
+This sreenshot is done with deprecated test data and does not<br/>represent real pump notification in homepage (Will be updated later to represent correctly)<br/>
 <img src="https://user-images.githubusercontent.com/94760484/236458725-a8821f1e-b10f-41e0-9328-8224e1135d99.PNG" width="300" height="600" />
 <img src="https://user-images.githubusercontent.com/94760484/236458763-578dad37-fe7d-4001-8b4b-be1bb0f702d6.jpg" width="300" height="600" />
 <img src="https://user-images.githubusercontent.com/94760484/236458779-59f2216b-02db-4e36-8a9f-2d4d00a0a991.PNG" width="300" height="600" />
