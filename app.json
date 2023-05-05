@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "my-app",
-    "slug": "my-app",
+    "name": "PumpApp",
+    "slug": "pumpapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon1_denoise.png",
@@ -18,16 +18,24 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "PumpApp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.lauri_iivarinen.pumpapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d0ada57c-a5ae-4060-8fbc-9fddd68fcb60"
+      }
+    },
+    "owner": "lauri_iivarinen"
   }
 }
