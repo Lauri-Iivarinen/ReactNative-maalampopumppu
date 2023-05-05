@@ -1,6 +1,6 @@
 # ReactNative-maalampopumppu
 
-Final project for Mobiiliohjelmointi (Mobile application developing)
+Final project for Mobiiliohjelmointi (Mobile application development)
 
 React Native application
 
