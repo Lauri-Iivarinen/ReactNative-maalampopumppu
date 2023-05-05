@@ -12,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/d0ada57c-a5ae-4060-8fbc-9fddd68fcb60"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -36,6 +37,9 @@
         "projectId": "d0ada57c-a5ae-4060-8fbc-9fddd68fcb60"
       }
     },
-    "owner": "lauri_iivarinen"
+    "owner": "lauri_iivarinen",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
   }
 }
