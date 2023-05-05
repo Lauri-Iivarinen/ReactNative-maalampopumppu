@@ -28,8 +28,8 @@ export default function HomeScreenData() {
     }
 
     useEffect(() => {
-        //doFetch()
-        setData(fetchOfflineData())
+        doFetch()
+        //setData(fetchOfflineData())
     }, [])
 
     const formatName = (name: string) => {
