@@ -23,3 +23,10 @@ With the application you can:
   - Read pump details
 
 # Screenshots
+<p float="left">
+<img src="https://user-images.githubusercontent.com/94760484/236458725-a8821f1e-b10f-41e0-9328-8224e1135d99.PNG" width="400" height="800" />
+<img src="https://user-images.githubusercontent.com/94760484/236458763-578dad37-fe7d-4001-8b4b-be1bb0f702d6.jpg" width="400" height="800" />
+<img src="https://user-images.githubusercontent.com/94760484/236458779-59f2216b-02db-4e36-8a9f-2d4d00a0a991.PNG" width="400" height="800" />
+<img src="https://user-images.githubusercontent.com/94760484/236458786-03c545b8-7dfa-4d6c-8c2b-1ab7d4820981.PNG" width="400" height="800" />
+<img src="https://user-images.githubusercontent.com/94760484/236458794-fac23b8a-633d-459f-b050-671bbbbc1b03.PNG" width="400" height="800" />
+</p>
