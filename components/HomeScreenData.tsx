@@ -5,7 +5,7 @@ import { View, Text, RefreshControl, ScrollView  } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { styles } from "../util/stylesheet";
 import Icon from "react-native-vector-icons/Ionicons";
-import { fetchWithIp } from "../util/fetch";
+import { fetchOfflineData, fetchWithIp } from "../util/fetch";
 import { PumpCodes } from "../types/types";
 import { getFrontPageValue } from "../util/util";
 
@@ -28,8 +28,8 @@ export default function HomeScreenData() {
     }
 
     useEffect(() => {
-        doFetch()
-        //setData(fetchOfflineData())
+        //doFetch()
+        setData(fetchOfflineData())
     }, [])
 
     const formatName = (name: string) => {

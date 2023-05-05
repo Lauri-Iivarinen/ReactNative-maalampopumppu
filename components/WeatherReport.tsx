@@ -94,7 +94,7 @@ export default function WeatherReport({route, navigation}: any){
                 >
                     {filtered?.map((item, index) => {
                         return(
-                            <View style={{height: 75}}>
+                            <View key={index} style={{height: 75}}>
                                 <Text style={{marginLeft: 8, fontSize: 20}}>{timeStampDate(item[0].dt_txt)}</Text>
                                 <ScrollView 
                                 horizontal={true}
