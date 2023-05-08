@@ -22,6 +22,12 @@ With the application you can:
   - Edit pump configurations (when it turns on and off for example)
   - Read pump details
 
+# Future iterations
+
+  - Format api fetch keys from pump to be more readable
+  - Validate all user inputs
+  - Make electricity price world wide(if possible)
+
 # Screenshots
 <p float="left">
 This sreenshot is done with<br/>deprecated test data and does not<br/>represent real pump notification in homepage<br/>(Will be updated later to represent correctly)<br/>
