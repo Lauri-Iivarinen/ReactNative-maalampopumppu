@@ -7,8 +7,10 @@ import { MAP_QUEST_API_KEY } from '@env';
 import { styles } from '../util/stylesheet';
 
 
+//Leftside drawer for setting ip + pump location
 export default function DrawerScreen(){
 
+    //new inputs
     const [location, setLocation] = useState<string>('')
     const [ipAddress, setIpAddress] = useState<string>('')
 
@@ -27,6 +29,7 @@ export default function DrawerScreen(){
       AsyncStorage.setItem('lon', longtitude)
     }
 
+    //Find entered location and save latitude+longtitude (only selects 1st result, does not validate outcome)
     const fetchLocation = async (loc: string) => {
         try {            
             const response = await fetch('https://www.mapquestapi.com/geocoding/v1/address?key='+MAP_QUEST_API_KEY+'&location=' + loc)

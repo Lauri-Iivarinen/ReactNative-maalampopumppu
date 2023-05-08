@@ -13,6 +13,7 @@ export default function PumpStatus() {
     const KEYWORDS = getKeywords('get')
     const [refreshing, setRefreshing] = useState(false)
 
+    //Fetch data from pump
     const doFetch = async () => {
         let fetchedData = fetchWithIp()
         setData(await fetchedData)

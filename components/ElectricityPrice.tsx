@@ -15,6 +15,7 @@ export default function ElectricityPrice() {
     const [labels, setLabels] = useState<string[]>()
     const [dataset, setDataset] = useState<any[]>()
 
+    //Fetch electricity price
     const fetchE = async () => {
         try {
             const response = await fetch('https://api.porssisahko.net/v1/latest-prices.json')
@@ -33,6 +34,7 @@ export default function ElectricityPrice() {
         //setPorssisahko(offline.prices)
     }, [])
 
+    //Get time values (hours) for next 24 hours and 1 previous hour
     const get24Hours = (sahko: sahko[]) => {
         const date = new Date()
         const reverseData = sahko.slice().reverse()
@@ -47,6 +49,7 @@ export default function ElectricityPrice() {
         return day
     }
 
+    //Filter data to only show only results for next 24 hours
     const next24 = (sahko: sahko[]) => {
         if (sahko.length > 0) {
         const day = get24Hours(sahko)
@@ -64,7 +67,7 @@ export default function ElectricityPrice() {
         }
     }
 
-
+    //Chart label formatting
     const getLabels = (sahko: sahko[]) => {
         const date = new Date()
         //Only take values from items that are also shown in chart (from this hour -1 ->)

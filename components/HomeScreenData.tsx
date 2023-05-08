@@ -15,6 +15,7 @@ export default function HomeScreenData() {
     const filteredNames = ['Heat set 1', 'Radiator Return', 'Compressor  0W', 'Alarm  0W']
     const [refreshing, setRefreshing] = useState(false);
 
+    //Get only the "4 important" data points to show in homepage
     const filterFrontpage = (data: PumpCodes[]) => {
         const filtered = data.filter(item => {
             return filteredNames.includes(item.name)
@@ -22,6 +23,7 @@ export default function HomeScreenData() {
         setData(filtered)
     } 
 
+    //Fetch data from pump
     const doFetch = async () => {
         let fetchedData = fetchWithIp()
         filterFrontpage(await fetchedData)

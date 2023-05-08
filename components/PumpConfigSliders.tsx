@@ -30,6 +30,7 @@ export default function PumpConfigSliders({ route, navigation }: any) {
     const [confirmDialog, setConfirmDialog] = useState(false)
     const [snackbarVisible, setSnackbarVisible] = useState(false)
 
+    //Fetch data from pump
     const doFetch = async () => {
         let fetchedData = fetchWithIp()
         setData(await fetchedData)
@@ -40,6 +41,7 @@ export default function PumpConfigSliders({ route, navigation }: any) {
         //setData(fetchOfflineData())
     },[])
 
+    //Once data gets fetched get data for the 2 slider values
     useEffect(() => {
         let curve = null
         let roomTemp = null
@@ -61,7 +63,8 @@ export default function PumpConfigSliders({ route, navigation }: any) {
         setSnackbarVisible(true)
         setTimeout(() => setSnackbarVisible(false), 4000)
     }
- 
+    
+    //Result of POST to pump API
     const checkResponse = (response: any, json: PumpCodes, newValue: number) => {
         if (response.response === 'Ok') {
             const code: PumpCodes = {
@@ -77,6 +80,7 @@ export default function PumpConfigSliders({ route, navigation }: any) {
         }
     }
     
+    //Post multiple values and wait for all to complete
     const updateConfig = () => {
         setConfirmDialog(!confirmDialog)
         Promise.all([posthWithIp(heatCurve!, heatCurveValue!), posthWithIp(roomTemp!, roomTempValue!)])

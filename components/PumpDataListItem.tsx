@@ -20,6 +20,7 @@ export default function PumpDataListItem({ props }: any) {
         return data.filter(item => item.valueType === keyword)
     }
 
+    //Get icon for boolean type values
     const getIcon = (item: PumpCodes) => {
         const name = item.value === 0 ? 'cancel' : 'check'
         return(<View style={{alignItems: 'center'}}><Icon name={name} color={item.value === 0 ? 'red': 'green'}></Icon><Text>{getValue(item.value, item.valueType!)}</Text></View>)

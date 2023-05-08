@@ -20,6 +20,7 @@ export default function WeatherReport({route, navigation}: any){
         return day
     }
 
+    //Split days from raw data into string[]
     const getDifferentDays = (weather: any[]) => {
         const days: string[] = [] 
         weather.forEach(item => {
@@ -30,6 +31,7 @@ export default function WeatherReport({route, navigation}: any){
         return days
     }
 
+    //Filter raw list of hours and weather data into seperate days
     const filterWeathers = (weather: any[]) => {
         const days = getDifferentDays(weather)
         const reportsForDays: any[] = []
@@ -42,6 +44,7 @@ export default function WeatherReport({route, navigation}: any){
         setStatus(true)
     }
 
+    //Fetch data based on lat,long saved in async storage
     const fetchWeatherData = async (lat: any, lon: any) => {
         try {
             const response = await fetch('https://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&units=metric&appid=' + WEATHER_API_KEY)
@@ -78,7 +81,8 @@ export default function WeatherReport({route, navigation}: any){
         return `${hour}:00`
     }
 
-    const itemSeparator = () => <View style={{height: 1, backgroundColor: 'black'}}></View>
+    const itemSeparator = () => <View style={{ height: 1, backgroundColor: 'black' }}></View>
+    
     if(status){
         return(
             <SafeAreaProvider>

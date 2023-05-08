@@ -9,6 +9,7 @@ import { Snackbar } from "@react-native-material/core";
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../util/stylesheet';
 
+//Raw data from pump
 export default function PumpConfig({ route, navigation }: any) {
     //idx-> ID, val -> VALUE, USE Promise.all()
     const POSTENDPOINT = 'http://' + HOST + 'api/set?idx=2204&val=220'
@@ -17,6 +18,7 @@ export default function PumpConfig({ route, navigation }: any) {
     const [refreshing, setRefreshing] = useState(false)
     const [snackbarVisible, setSnackbarVisible] = useState(false)
 
+    //Fetch data from pump
     const doFetch = async () => {
         let fetchedData = fetchWithIp()
         setData(await fetchedData)
