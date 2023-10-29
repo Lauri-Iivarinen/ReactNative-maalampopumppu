@@ -103,16 +103,16 @@ export default function PumpConfigSliders({ route, navigation }: any) {
                     <Text>{heatCurve?.value / 10}</Text>
                     <Text style={{color: 'red'}}>{heatCurveValue ? heatCurveValue / 10 : heatCurve?.value / 10}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                        <Text>1.6</Text>
+                        <Text>1.7</Text>
                         <Slider
                             style={{ width: 200, height: 40 }}
-                            minimumValue={16}
-                            maximumValue={22}
+                            minimumValue={17}
+                            maximumValue={25}
                             step={1}
                             value={heatCurve?.value}
                             onValueChange={(e) => setHeatCurveValue(e)}
                             />
-                        <Text>2.2</Text>
+                        <Text>2.5</Text>
                     </View>
                 </View>
                 <View style={styles.centered}>

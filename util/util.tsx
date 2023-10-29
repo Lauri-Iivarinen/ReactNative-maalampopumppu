@@ -93,8 +93,11 @@ export const getValue = (value: number, keyword: string) => {
     }
 }
 
-export const getFrontPageValue = ( name: string, value: number, keyword: string) => {
+export const getFrontPageValue = (name: string, value: number, keyword: string, compressor = 0) => {
     if (name === 'Heat set 1' || name === 'Radiator Return') return getValue(value, keyword)
+    else if (name === 'Heating setpoint') {
+        return compressor === 0 ? getValue(value - 25, keyword): getValue(value + 25, keyword)
+    }
     else if (name === 'Alarm  0W') return 'No alarms'
-    else return <Icon name={value === 0 ? 'power-outline' : 'play-outline'} size={30} color={value === 0 ? 'red' : 'green'} />
+    else return <Icon name={value === 0 ? 'pause' : 'play'} size={30} color={value === 0 ? 'red' : 'green'} />
 }

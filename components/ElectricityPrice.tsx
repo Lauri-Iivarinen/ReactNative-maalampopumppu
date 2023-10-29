@@ -113,6 +113,7 @@ export default function ElectricityPrice() {
                     withHorizontalLines={true}
                     withVerticalLines={false}
                     withDots={false}
+                    fromZero={true}
                 />
             </View>
             )

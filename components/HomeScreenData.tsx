@@ -12,7 +12,7 @@ import { getFrontPageValue } from "../util/util";
 export default function HomeScreenData() {
 
     const [data, setData] = useState<PumpCodes[]>([])
-    const filteredNames = ['Heat set 1', 'Radiator Return', 'Compressor  0W', 'Alarm  0W']
+    const filteredNames = ['Heat set 1', 'Radiator Return', 'Compressor  0W', 'Heating setpoint']
     const [refreshing, setRefreshing] = useState(false);
 
     //Get only the "4 important" data points to show in homepage
@@ -34,6 +34,8 @@ export default function HomeScreenData() {
         //setData(fetchOfflineData())
     }, [])
 
+    const findCompressor = () => data.find(i => i.name === 'Compressor  0W')
+
     const formatName = (name: string) => {
         switch (name) {
             case 'Heat set 1':
@@ -42,12 +44,14 @@ export default function HomeScreenData() {
                 return 'Radiator return'
             case 'Compressor  0W':
                 return 'Compressor'
-            case 'Alarm  0W':
-                return 'Alarms'
+            case 'Heating setpoint':
+                const compressor = findCompressor()
+                return compressor?.value === 1? 'Stop' : 'Start'
             default:
                 return name
         }
     }
+    //Heating setpoint, käynnistyy (vihreö) 2,5 enemmän
 
     if (data.length < 4) {
         return (
@@ -82,8 +86,8 @@ export default function HomeScreenData() {
                                 <View style={styles.cardContent}><Icon name="repeat-outline" size={30}></Icon><Text>{formatName(data[1].name)}</Text><Text>{getFrontPageValue(data[1].name, data[1].value, data[1].valueType!)}</Text></View>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <View style={styles.cardContent}><Icon name="toggle-outline" size={30}></Icon><Text>{formatName(data[2].name)}</Text><Text>{getFrontPageValue(data[2].name, data[2].value, data[2].valueType!)}</Text></View>
-                                <View style={styles.cardContent}><Icon name="megaphone-outline" size={30}></Icon><Text>{formatName(data[3].name)}</Text><Text>{getFrontPageValue(data[3].name, data[3].value, data[3].valueType!)}</Text></View>
+                            <View style={styles.cardContent}><Text style={{paddingTop: 15}}>{formatName(data[3].name)}</Text><Text>{getFrontPageValue(data[3].name, data[3].value, data[3].valueType!)}</Text></View>
+                                <View style={styles.cardContent}><Text style={{color: findCompressor()?.value === 0? 'green': 'red'}}>{formatName(data[2].name)}</Text><Text>{getFrontPageValue(data[2].name, data[2].value, data[2].valueType!)}</Text></View>
                             </View>
                         </View>
                     </ScrollView>
