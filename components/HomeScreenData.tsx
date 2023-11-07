@@ -86,8 +86,8 @@ export default function HomeScreenData() {
                                 <View style={styles.cardContent}><Icon name="repeat-outline" size={30}></Icon><Text>{formatName(data[1].name)}</Text><Text>{getFrontPageValue(data[1].name, data[1].value, data[1].valueType!)}</Text></View>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <View style={styles.cardContent}><Text style={{paddingTop: 15}}>{formatName(data[3].name)}</Text><Text>{getFrontPageValue(data[3].name, data[3].value, data[3].valueType!)}</Text></View>
-                                <View style={styles.cardContent}><Text style={{color: findCompressor()?.value === 0? 'green': 'red'}}>{formatName(data[2].name)}</Text><Text>{getFrontPageValue(data[2].name, data[2].value, data[2].valueType!)}</Text></View>
+                                <View style={styles.cardContent}><Text style={{paddingTop: 15}}>{formatName(data[3].name)}</Text><Text>{getFrontPageValue(data[3].name, data[3].value, data[3].valueType!)}</Text></View>
+                                <View style={styles.cardContent}><Text style={{color: findCompressor()?.value === 0? 'green': 'red'}}>{formatName(data[2].name)}</Text><Text>{getFrontPageValue(data[2].name, data[2].value, data[2].valueType!, findCompressor()?.value)}</Text></View>
                             </View>
                         </View>
                     </ScrollView>
