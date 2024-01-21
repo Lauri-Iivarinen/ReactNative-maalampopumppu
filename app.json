@@ -40,6 +40,9 @@
     "owner": "lauri_iivarinen",
     "runtimeVersion": {
       "policy": "sdkVersion"
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
